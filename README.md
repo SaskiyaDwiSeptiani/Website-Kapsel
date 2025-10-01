@@ -1,2 +1,491 @@
-# Website-Kapsel
-Membangun official website /laman pribadi
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kapita Selekta - Open Source Philosophy</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 50%, #ffecd2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 25px;
+            box-shadow: 0 10px 40px rgba(252, 182, 159, 0.3);
+            margin-bottom: 30px;
+            text-align: center;
+            border: 2px solid rgba(255, 236, 210, 0.5);
+        }
+
+        .profile-section {
+            margin-bottom: 25px;
+            padding-bottom: 25px;
+            border-bottom: 2px solid rgba(252, 182, 159, 0.3);
+        }
+
+        .profile-name {
+            color: #e85d75;
+            font-size: 1.8em;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .profile-npm {
+            color: #ff9a76;
+            font-size: 1.2em;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .profile-course {
+            color: #999;
+            font-size: 0.95em;
+        }
+
+        h1 {
+            color: #e85d75;
+            font-size: 2.8em;
+            margin-bottom: 12px;
+            text-shadow: 2px 2px 4px rgba(232, 93, 117, 0.1);
+        }
+
+        .subtitle {
+            color: #ff9a76;
+            font-size: 1.3em;
+            font-weight: 500;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 28px;
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(252, 182, 159, 0.2);
+            transition: all 0.4s ease;
+            border: 2px solid rgba(255, 236, 210, 0.4);
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 45px rgba(232, 93, 117, 0.25);
+            border-color: rgba(232, 93, 117, 0.3);
+        }
+
+        .card h2 {
+            color: #e85d75;
+            margin-bottom: 18px;
+            font-size: 1.6em;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .icon {
+            font-size: 1.4em;
+            filter: drop-shadow(2px 2px 3px rgba(232, 93, 117, 0.2));
+        }
+
+        .card p, .card ul {
+            color: #666;
+            line-height: 1.9;
+            margin-bottom: 15px;
+        }
+
+        .card ul {
+            padding-left: 22px;
+        }
+
+        .card li {
+            margin-bottom: 12px;
+        }
+
+        .card strong {
+            color: #e85d75;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #ffecd2 0%, #fcb69f 100%);
+            color: #e85d75;
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-weight: 600;
+            display: inline-block;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .section-title {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 25px;
+            border-radius: 20px;
+            margin-bottom: 25px;
+            text-align: center;
+            border: 2px solid rgba(255, 236, 210, 0.5);
+            box-shadow: 0 8px 30px rgba(252, 182, 159, 0.2);
+        }
+
+        .section-title h2 {
+            color: #e85d75;
+            font-size: 2.2em;
+        }
+
+        .resources {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(252, 182, 159, 0.2);
+            border: 2px solid rgba(255, 236, 210, 0.5);
+        }
+
+        .resources h2 {
+            color: #e85d75;
+            margin-bottom: 25px;
+            text-align: center;
+            font-size: 1.8em;
+        }
+
+        .resource-link {
+            display: block;
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            color: #e85d75;
+            padding: 18px 25px;
+            margin-bottom: 15px;
+            border-radius: 15px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            border: 2px solid rgba(232, 93, 117, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .resource-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+            transition: left 0.5s;
+        }
+
+        .resource-link:hover::before {
+            left: 100%;
+        }
+
+        .resource-link:hover {
+            transform: scale(1.03) translateX(5px);
+            box-shadow: 0 8px 25px rgba(232, 93, 117, 0.3);
+            border-color: rgba(232, 93, 117, 0.4);
+        }
+
+        footer {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 25px;
+            border-radius: 20px;
+            text-align: center;
+            margin-top: 30px;
+            color: #999;
+            border: 2px solid rgba(255, 236, 210, 0.5);
+            box-shadow: 0 8px 30px rgba(252, 182, 159, 0.2);
+        }
+
+        footer p {
+            margin-bottom: 8px;
+        }
+
+        .footer-highlight {
+            color: #e85d75;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+            
+            .profile-name {
+                font-size: 1.5em;
+            }
+            
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes rotateIn {
+            from {
+                opacity: 0;
+                transform: rotate(-10deg) scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: rotate(0) scale(1);
+            }
+        }
+
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        body {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 25%, #ffd1dc 50%, #fcb69f 75%, #ffecd2 100%);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+        }
+
+        header {
+            animation: slideInLeft 0.8s ease-out;
+        }
+
+        .profile-name {
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .icon {
+            display: inline-block;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .card {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .card:nth-child(1) { animation: slideInLeft 0.6s ease-out 0.1s both; }
+        .card:nth-child(2) { animation: fadeIn 0.6s ease-out 0.2s both; }
+        .card:nth-child(3) { animation: slideInRight 0.6s ease-out 0.3s both; }
+        .card:nth-child(4) { animation: slideInLeft 0.6s ease-out 0.4s both; }
+        .card:nth-child(5) { animation: rotateIn 0.6s ease-out 0.5s both; }
+        .card:nth-child(6) { animation: slideInRight 0.6s ease-out 0.6s both; }
+        .card:nth-child(7) { animation: slideInLeft 0.6s ease-out 0.7s both; }
+        .card:nth-child(8) { animation: fadeIn 0.6s ease-out 0.8s both; }
+        .card:nth-child(9) { animation: slideInRight 0.6s ease-out 0.9s both; }
+
+        .section-title {
+            animation: fadeIn 0.8s ease-out 0.3s both;
+        }
+
+        .resources {
+            animation: fadeIn 0.8s ease-out 1s both;
+        }
+
+        footer {
+            animation: slideInRight 0.8s ease-out 1.2s both;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="profile-section">
+                <div class="profile-name">Saskiya Dwi Septiani</div>
+                <div class="profile-npm">NPM: 2315061033</div>
+                <div class="profile-course">Tugas Mata Kuliah Kapita Selekta</div>
+            </div>
+            <h1>📚 Kapita Selekta</h1>
+            <p class="subtitle">Material Kuliah: Open Source Philosophy</p>
+        </header>
+
+        <div class="section-title">
+            <h2>🌟 Materi Pembelajaran</h2>
+        </div>
+
+        <div class="content-grid">
+            <div class="card">
+                <h2><span class="icon">🔓</span>Pengertian Open Source</h2>
+                <p>Open Source adalah pendekatan pengembangan perangkat lunak yang <span class="highlight">kode sumbernya tersedia secara bebas</span> untuk dilihat, dimodifikasi, dan didistribusikan oleh siapa saja.</p>
+                <p>Prinsip utama mencakup transparansi, kolaborasi, dan kebebasan untuk berinovasi tanpa batasan lisensi proprietary.</p>
+            </div>
+
+            <div class="card">
+                <h2><span class="icon">🎯</span>Filosofi Open Source</h2>
+                <p>Filosofi Open Source dibangun atas beberapa prinsip fundamental:</p>
+                <ul>
+                    <li><strong>Kebebasan:</strong> Pengguna bebas menjalankan, mempelajari, dan memodifikasi software</li>
+                    <li><strong>Transparansi:</strong> Kode terbuka untuk audit dan verifikasi</li>
+                    <li><strong>Kolaborasi:</strong> Pengembangan dilakukan secara komunal</li>
+                    <li><strong>Meritocrasi:</strong> Kontribusi dinilai berdasarkan kualitas</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h2><span class="icon">📜</span>Sejarah & Perkembangan</h2>
+                <p>Gerakan Open Source dimulai dengan <span class="highlight">Free Software Movement</span> oleh Richard Stallman (1983) dan GNU Project.</p>
+                <p>Istilah "Open Source" dipopulerkan pada 1998 dengan pendirian Open Source Initiative (OSI).</p>
+                <p>Proyek-proyek besar seperti Linux, Apache, dan Mozilla menunjukkan kesuksesan model ini.</p>
+            </div>
+
+            <div class="card">
+                <h2><span class="icon">⚖️</span>Lisensi Open Source</h2>
+                <ul>
+                    <li><strong>GPL (General Public License):</strong> Copyleft, turunan harus tetap open source</li>
+                    <li><strong>MIT License:</strong> Permisif, minim pembatasan</li>
+                    <li><strong>Apache License:</strong> Permisif dengan perlindungan paten</li>
+                    <li><strong>BSD License:</strong> Sangat permisif, boleh dijadikan proprietary</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h2><span class="icon">💡</span>Manfaat Open Source</h2>
+                <ul>
+                    <li>Transparansi dan keamanan lebih tinggi</li>
+                    <li>Biaya pengembangan lebih rendah</li>
+                    <li>Inovasi lebih cepat melalui kolaborasi</li>
+                    <li>Tidak ada vendor lock-in</li>
+                    <li>Kesempatan belajar dari kode berkualitas</li>
+                    <li>Komunitas support yang kuat</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h2><span class="icon">🚀</span>Proyek Open Source Terkenal</h2>
+                <ul>
+                    <li><strong>Linux:</strong> Sistem operasi yang mendominasi server</li>
+                    <li><strong>Firefox:</strong> Web browser dengan privasi tinggi</li>
+                    <li><strong>WordPress:</strong> CMS yang menjalankan 40%+ website</li>
+                    <li><strong>Python:</strong> Bahasa pemrograman populer</li>
+                    <li><strong>TensorFlow:</strong> Framework machine learning</li>
+                    <li><strong>Kubernetes:</strong> Container orchestration</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h2><span class="icon">🤝</span>Kontribusi ke Open Source</h2>
+                <p>Cara berkontribusi:</p>
+                <ul>
+                    <li>Menulis kode dan bug fixes</li>
+                    <li>Membuat dokumentasi</li>
+                    <li>Melaporkan bugs</li>
+                    <li>Review kode orang lain</li>
+                    <li>Membantu komunitas di forum</li>
+                    <li>Membuat tutorial dan konten edukasi</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h2><span class="icon">⚡</span>Open Source vs Proprietary</h2>
+                <p><strong>Open Source:</strong> Kode terbuka, gratis/berbayar, komunitas besar, fleksibel</p>
+                <p><strong>Proprietary:</strong> Kode tertutup, berbayar, support vendor, kontrol ketat</p>
+                <p>Keduanya memiliki tempat dalam ekosistem software modern.</p>
+            </div>
+
+            <div class="card">
+                <h2><span class="icon">🌍</span>Dampak Sosial & Ekonomi</h2>
+                <p>Open Source telah mengubah industri teknologi:</p>
+                <ul>
+                    <li>Demokratisasi akses teknologi</li>
+                    <li>Percepatan inovasi global</li>
+                    <li>Penciptaan lapangan kerja baru</li>
+                    <li>Model bisnis alternatif (support, hosting, enterprise)</li>
+                    <li>Pendidikan teknologi yang lebih accessible</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="resources">
+            <h2>📖 Sumber Belajar</h2>
+            <a href="https://opensource.org" class="resource-link" target="_blank">
+                🔗 Open Source Initiative (OSI)
+            </a>
+            <a href="https://www.gnu.org/philosophy/free-sw.html" class="resource-link" target="_blank">
+                🔗 GNU Free Software Philosophy
+            </a>
+            <a href="https://github.com/open-source" class="resource-link" target="_blank">
+                🔗 GitHub Open Source Guides
+            </a>
+            <a href="https://choosealicense.com" class="resource-link" target="_blank">
+                🔗 Panduan Memilih Lisensi Open Source
+            </a>
+        </div>
+
+        <footer>
+            <p>📚 Material Kuliah Kapita Selekta - Open Source Philosophy</p>
+            <p class="footer-highlight">Saskiya Dwi Septiani - NPM: 2315061033</p>
+            <p>Dibuat dengan ❤️ untuk pembelajaran</p>
+        </footer>
+    </div>
+</body>
+</html>
